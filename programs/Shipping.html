@@ -57,7 +57,7 @@
   <textarea id="code" readonly>// SPDX-License-Identifier: MIT
     pragma solidity ^0.8.0;
     
-    contract shopping{
+    contract shipping{
         address public buyer;
         address public seller;
         address public  carrier;
@@ -79,14 +79,19 @@
         }
     
         function confirmdelivery() public {
-            require(msg.sender == buyer, "only buyer can confirm");
-            require(carrier != address(0), "Carrier must be assigned before delivery can be confirmed");
-            require(block.timestamp >= deliverytime, "Delivery time has not yet passed");
-    
-            uint amount = price;
-            price = 0;
-            payable(msg.sender).transfer(amount); 
-        }
+          require(msg.sender == buyer, "only buyer can confirm");
+          require(carrier != address(0), "Carrier must be assigned before delivery can be confirmed");
+          require(block.timestamp >= deliverytime, "Delivery time has not yet passed");
+  
+      }
+  
+      function withdrawfund() public  {
+          require(msg.sender==seller||msg.sender==carrier, "Only the seller or carrier can withdrawn funds");
+          require(delivered==true, "Delivery must be confirmed before funds withdrawn");
+          uint amount = price;
+          price = 0;
+          payable(msg.sender).transfer(amount); 
+      }
     }  
 </textarea>
   <button id="copy-btn" onclick="copyCode()">Copy</button>
