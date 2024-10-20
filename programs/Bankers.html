@@ -1,0 +1,179 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Code</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  #code-container {
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  #code {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 10px;
+    resize: none;
+  }
+
+  #copy-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #copy-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div id="code-container">
+  <textarea id="code" readonly>
+    #include <stdio.h>
+
+      int np, nr, r[10], ava[10], all[10][10], max[10][10], need[10][10], safe[10], f[10];
+      
+      void inputResources() {
+          printf("Enter number of resources: ");
+          scanf("%d", &nr);
+          printf("Enter resource instances: ");
+          for (int i = 0; i < nr; i++) scanf("%d", &r[i]);
+      }
+      
+      void inputProcesses() {
+          printf("Enter number of processes: ");
+          scanf("%d", &np);
+          for (int i = 0; i < np; i++) {
+              f[i] = 0; // Initially marking all processes as unfinished
+              printf("Enter allocated resources for process P[%d]: ", i + 1);
+              for (int j = 0; j < nr; j++){
+                  scanf("%d", &all[i][j]);
+              } 
+      
+              printf("Enter max resources for process P[%d]: ", i + 1);
+              for (int j = 0; j < nr; j++){
+                scanf("%d", &max[i][j]);  
+              } 
+          }
+      }
+      
+      void calculateNeedAndAvailability() {
+          printf("\nNeed Matrix:\n");
+          for (int i = 0; i < np; i++) {
+              for (int j = 0; j < nr; j++) {
+                  need[i][j] = max[i][j] - all[i][j]; // Calculating need matrix
+                  printf("%d ", need[i][j]);
+              }
+              printf("\n");
+          }
+      
+          printf("\nAvailable Resources: ");
+          for (int i = 0; i < nr; i++) {
+              int sum = 0;
+              for (int j = 0; j < np; j++){
+                  sum += all[j][i];
+                  }// Calculating available resources
+              ava[i] = r[i] - sum;
+              printf("%d ", ava[i]);
+          }
+          printf("\n");
+      }
+      
+      int isSafe() {
+          int work[10], index = 0;
+          for (int i = 0; i < nr; i++) work[i] = ava[i]; // Initialize work array with available resources
+      
+          // Reset finish flags before starting the safety check
+          for (int i = 0; i < np; i++) f[i] = 0;
+      
+          int count = 0;
+          while (count < np) {  // Loop through processes and try to find a safe sequence
+              int found = 0;
+              for (int i = 0; i < np; i++) {
+                  if (!f[i]) {  // Process not finished
+                      int j;
+                      for (j = 0; j < nr; j++) {
+                          if (need[i][j] > work[j]) {
+                              break;
+                              }// Process i can't be completed if need exceeds available resources
+                      }
+      
+                      if (j == nr) {  // All resources can be allocated for process i
+                          for (int k = 0; k < nr; k++) work[k] += all[i][k]; // Add process i's allocated resources to work
+                          safe[index++] = i;  // Add to safe sequence
+                          f[i] = 1;  // Mark process i as finished
+                          found = 1;
+                          count++;
+                      }
+                  }
+              }
+      
+              if (!found) {  // No process could be safely finished, return failure
+                  return 0;
+              }
+          }
+      
+          return 1;  // Safe sequence found
+      }
+      
+      void printSafeSequence() {
+          if (isSafe()) {
+              printf("\nSafe Sequence: ");
+              for (int i = 0; i < np; i++){
+                  printf("P[%d] ", safe[i] + 1);
+              }  // Output safe sequence (adjusted for 1-based index)
+              printf("\n");
+          } else {
+              printf("\nNo Safe Sequence Found!\n");
+          }
+      }
+      
+      int main() {
+          inputResources();
+          inputProcesses();
+          calculateNeedAndAvailability();
+          printSafeSequence();
+          return 0;
+      }
+        
+</textarea>
+  <button id="copy-btn" onclick="copyCode()">Copy</button>
+</div>
+
+<script>
+function copyCode() {
+  var codeTextArea = document.getElementById("code");
+  codeTextArea.select();
+  document.execCommand("copy");
+  alert("Code copied to clipboard!");
+}
+</script>
+
+</body>
+</html>

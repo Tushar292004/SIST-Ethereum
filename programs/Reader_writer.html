@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Code</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  #code-container {
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  #code {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 10px;
+    resize: none;
+  }
+
+  #copy-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #copy-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div id="code-container">
+  <textarea id="code" readonly>
+    #include<stdio.h>
+    #include<stdlib.h> // For exit()
+    
+    typedef int semaphore; // Defining a semaphore type for simplicity
+    
+    int main() {
+        semaphore sread = 0, swrite = 0; // Semaphore for read and write
+        int ch, r = 0;                   // Choice and reader count
+    
+        printf("\nReader-Writer Problem Simulation\n");
+    
+        do {
+            // Display the menu
+            printf("\nMenu");
+            printf("\n\t1. Read from file");
+            printf("\n\t2. Write to file");
+            printf("\n\t3. Exit the reader");
+            printf("\n\t4. Exit the writer");
+            printf("\n\t5. Exit");
+            printf("\nEnter your choice: ");
+            scanf("%d", &ch);
+    
+            // Switch case to handle the menu choices
+            switch (ch) {
+                case 1: // Read from file
+                    if (swrite == 0) { // No writer is active
+                        sread = 1;     // Mark reading in progress
+                        r += 1;        // Increase the reader count
+                        printf("\nReader %d is reading the file", r);
+                    } else {
+                        printf("\nReading is not possible while writing is in progress");
+                    }
+                    break;
+    
+                case 2: // Write to file
+                    if (sread == 0 && swrite == 0) { // No readers or writers active
+                        swrite = 1;                  // Mark writing in progress
+                        printf("\nWriter is writing to the file");
+                    } else if (swrite == 1) {
+                        printf("\nWriter is still writing the file");
+                    } else if (sread == 1) {
+                        printf("\nCannot write while readers are reading the file");
+                    }
+                    break;
+    
+                case 3: // Exit the reader
+                    if (r > 0) { // There are active readers
+                        printf("\nReader %d has closed the file", r);
+                        r -= 1; // Decrease the reader count
+                        if (r == 0) {
+                            sread = 0; // No readers left
+                        }
+                    } else {
+                        printf("\nNo readers currently accessing the file");
+                    }
+                    break;
+    
+                case 4: // Exit the writer
+                    if (swrite == 1) { // Writer is active
+                        printf("\nWriter has closed the file");
+                        swrite = 0;    // Mark writing as finished
+                    } else {
+                        printf("\nNo writer is currently writing to the file");
+                    }
+                    break;
+    
+                case 5: // Exit the program
+                    exit(0);
+    
+                default: // Invalid choice
+                    printf("\nInvalid choice! Please enter a valid option.");
+                    break;
+            }
+        } while (ch < 6); // Continue until user chooses to exit
+    
+        return 0;
+    }
+</textarea>
+  <button id="copy-btn" onclick="copyCode()">Copy</button>
+</div>
+
+<script>
+function copyCode() {
+  var codeTextArea = document.getElementById("code");
+  codeTextArea.select();
+  document.execCommand("copy");
+  alert("Code copied to clipboard!");
+}
+</script>
+
+</body>
+</html>

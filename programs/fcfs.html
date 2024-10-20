@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy Code</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    #code-container {
+      width: 80%;
+      max-width: 800px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+    }
+
+    #code {
+      width: 100%;
+      height: 500px;
+      margin-bottom: 10px;
+      resize: none;
+    }
+
+    #copy-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #copy-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="code-container">
+    <textarea id="code" readonly>
+    #include <stdio.h>
+
+    int main() {
+        int nop, wt[10], twt = 0, tat[10], ttat = 0, i, bt[10];
+        float awt, atat;
+    
+        // Initialize average waiting time and turnaround time to 0
+        awt = 0.0;
+        atat = 0.0;
+    
+        // Input the number of processes
+        printf("Enter the number of processes: ");
+        scanf("%d", &nop);
+    
+        // Input the burst time for each process
+        for (i = 0; i < nop; i++) {
+            printf("Enter the burst time for process %d: ", i + 1);
+            scanf("%d", &bt[i]);
+        }
+    
+        // Initial waiting time and turnaround time calculations
+        wt[0] = 0;        // First process has no waiting time
+        tat[0] = bt[0];    // Turnaround time for the first process is its burst time
+        twt = wt[0];       // Total waiting time starts with 0
+        ttat = tat[0];     // Total turnaround time starts with the burst time of the first process
+    
+        // Loop to calculate waiting time and turnaround time for all processes
+        for (i = 1; i < nop; i++) {
+            wt[i] = wt[i - 1] + bt[i - 1];  // Waiting time is cumulative burst time of previous processes
+            tat[i] = wt[i] + bt[i];         // Turnaround time is waiting time + burst time
+            twt += wt[i];                   // Add current waiting time to total
+            ttat += tat[i];                 // Add current turnaround time to total
+        }
+    
+        // Calculate average waiting time and turnaround time
+        awt = (float)twt / nop;
+        atat = (float)ttat / nop;
+    
+        // Display process details
+        printf("\nProcessID\tBurstTime\tWaitingTime\tTurnaroundTime\n");
+        for (i = 0; i < nop; i++)
+            printf("%d\t\t%d\t\t%d\t\t%d\n", i + 1, bt[i], wt[i], tat[i]);
+    
+        // Display total and average times
+        printf("\nTotal Waiting Time: %d\n", twt);
+        printf("Total Turnaround Time: %d\n", ttat);
+        printf("Average Waiting Time: %.2f\n", awt);
+        printf("Average Turnaround Time: %.2f\n", atat);
+    
+        return 0;
+    }
+</textarea>
+    <button id="copy-btn" onclick="copyCode()">Copy</button>
+  </div>
+
+  <script>
+    function copyCode() {
+      var codeTextArea = document.getElementById("code");
+      codeTextArea.select();
+      document.execCommand("copy");
+      alert("Code copied to clipboard!");
+    }
+  </script>
+
+</body>
+
+</html>
