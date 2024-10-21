@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy Code</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    #code-container {
+      width: 80%;
+      max-width: 800px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+    }
+
+    #code {
+      width: 100%;
+      height: 500px;
+      margin-bottom: 10px;
+      resize: none;
+    }
+
+    #copy-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #copy-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="code-container">
+    <textarea id="code" readonly>
+      from Crypto.Cipher import Blowfish
+      from Crypto.Random import get_random_bytes
+      from Crypto.Util.Padding import pad, unpad
+      
+      def blowfish_encrypt_decrypt(text, key=None, mode='encrypt'):
+          key = key or get_random_bytes(16)  # Generate key if not provided
+          cipher = Blowfish.new(key, Blowfish.MODE_ECB)
+          if mode == 'encrypt':
+              return cipher.encrypt(pad(text.encode(), Blowfish.block_size)), key
+          return unpad(cipher.decrypt(text), Blowfish.block_size).decode()
+      
+      # Example usage:
+      if __name__ == "__main__":
+          key = get_random_bytes(16)
+          plain_text = input("Enter the text")
+      
+          encrypted, key = blowfish_encrypt_decrypt(plain_text, key)
+          print(f"Encrypted: {encrypted}")
+      
+          decrypted = blowfish_encrypt_decrypt(encrypted, key, 'decrypt')
+          print(f"Decrypted: {decrypted}")
+      
+</textarea>
+    <button id="copy-btn" onclick="copyCode()">Copy</button>
+  </div>
+
+  <script>
+    function copyCode() {
+      var codeTextArea = document.getElementById("code");
+      codeTextArea.select();
+      document.execCommand("copy");
+      alert("Code copied to clipboard!");
+    }
+  </script>
+
+</body>
+
+</html>

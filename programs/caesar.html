@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Code</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  #code-container {
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  #code {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 10px;
+    resize: none;
+  }
+
+  #copy-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #copy-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div id="code-container">
+  <textarea id="code" readonly>
+    def caesar(text, shift, mode='encrypt'):
+    result = ""
+    for char in text:
+        if char.isalpha():
+            ascii_offset = 65 if char.isupper() else 97
+            shifted = (ord(char) + shift * (1 if mode == 'encrypt' else -1) - ascii_offset) % 26 + ascii_offset
+            result += chr(shifted)
+        else:
+            result += char
+    return result
+
+text = input("Enter the text: ")
+shift = int(input("Enter the shift value: "))
+
+encrypted = caesar(text, shift)
+print(f"Encrypted: {encrypted}")
+print(f"Decrypted: {caesar(encrypted, shift, 'decrypt')}")
+</textarea>
+  <button id="copy-btn" onclick="copyCode()">Copy</button>
+</div>
+
+<script>
+function copyCode() {
+  var codeTextArea = document.getElementById("code");
+  codeTextArea.select();
+  document.execCommand("copy");
+  alert("Code copied to clipboard!");
+}
+</script>
+
+</body>
+</html>

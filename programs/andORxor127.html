@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Code</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  #code-container {
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  #code {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 10px;
+    resize: none;
+  }
+
+  #copy-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #copy-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div id="code-container">
+  <textarea id="code" readonly>
+    def perform_operations(string):
+    and_result = ""
+    or_result = ""
+    xor_result = ""
+    
+    for char in string:
+        # AND operation with 127
+        and_result += chr(ord(char) & 127)
+        
+        # OR operation with 127
+        or_result += chr(ord(char) | 127)
+        
+        # XOR operation with 127
+        xor_result += chr(ord(char) ^ 127)
+
+    return and_result, or_result, xor_result
+
+def main():
+    input_string = "Hello World"
+    
+    # Perform AND, OR, and XOR operations
+    and_res, or_res, xor_res = perform_operations(input_string)
+    
+    # Print results
+    print(f"Original String: {input_string}")
+    print(f"AND with 127: {and_res}")
+    print(f"OR with 127: {or_res}")
+    print(f"XOR with 127: {xor_res}")
+
+if __name__ == "__main__":
+    main()
+
+  </textarea>
+  <button id="copy-btn" onclick="copyCode()">Copy</button>
+</div>
+
+<script>
+function copyCode() {
+  var codeTextArea = document.getElementById("code");
+  codeTextArea.select();
+  document.execCommand("copy");
+  alert("Code copied to clipboard!");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Code</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  #code-container {
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  #code {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 10px;
+    resize: none;
+  }
+
+  #copy-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #copy-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div id="code-container">
+  <textarea id="code" readonly>
+from Crypto.Cipher import DES
+from Crypto.Util.Padding import pad, unpad
+from secrets import token_bytes
+
+def des_encrypt_decrypt(text, key, mode='encrypt'):
+    des = DES.new(key, DES.MODE_ECB)  # Create DES cipher in ECB mode with the given key
+    if mode == 'encrypt':
+        return des.encrypt(pad(text.encode(), DES.block_size))  # Encrypt and pad the text
+    return unpad(des.decrypt(text), DES.block_size).decode()  # Decrypt and unpad the text
+
+# User input and encryption
+plaintext = input("Enter text to encrypt: ")
+
+# Generate a random key (8 bytes) for DES encryption
+key = token_bytes(8)
+
+# Encrypt the plaintext using the key
+ciphertext = des_encrypt_decrypt(plaintext, key)
+print(f"Encrypted: {ciphertext}")
+print(f"Key: {key}")
+
+# Decrypt the ciphertext using the same key
+decrypted = des_encrypt_decrypt(ciphertext, key, 'decrypt')
+print(f"Decrypted: {decrypted}")
+
+</textarea>
+  <button id="copy-btn" onclick="copyCode()">Copy</button>
+</div>
+
+<script>
+function copyCode() {
+  var codeTextArea = document.getElementById("code");
+  codeTextArea.select();
+  document.execCommand("copy");
+  alert("Code copied to clipboard!");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Code</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  #code-container {
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  #code {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 10px;
+    resize: none;
+  }
+
+  #copy-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #copy-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div id="code-container">
+  <textarea id="code" readonly>
+    import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.math.BigInteger;
+
+public class MD5HashExample {
+    public static void main(String[] args) {
+        String input = "Hello MD5!";
+        System.out.println("Original Text: " + input);
+        System.out.println("MD5 Hash: " + getMD5(input));
+    }
+
+    private static String getMD5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+            return String.format("%032x", no); // Ensure 32 characters with leading zeros
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+  </textarea>
+  <button id="copy-btn" onclick="copyCode()">Copy</button>
+</div>
+
+<script>
+function copyCode() {
+  var codeTextArea = document.getElementById("code");
+  codeTextArea.select();
+  document.execCommand("copy");
+  alert("Code copied to clipboard!");
+}
+</script>
+
+</body>
+</html>
