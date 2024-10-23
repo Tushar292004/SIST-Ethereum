@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -69,6 +69,80 @@ function downloadPDF() {
   var link = document.createElement('a');
   link.href = pdfPath;
   link.download = 'downloaded_file.pdf'; // Change the file name as desired
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download PDF</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  .container {
+    text-align: center;
+  }
+
+  .download-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .download-btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <ul>
+      <li><a href="./os/memory.html">memory manage</a></li>
+      <li><a href="./os/Dining_philosopher.html">Dining Philosopher</a></li>
+      <li><a href="./os/Reader_writer.html">Reader Writer</a></li>
+      <li><a href="./os/sjf.html">SJF Program</a></li>
+      <li><a href="./os/Priority_sch.html">Priority Scheduling</a></li>
+      <li><a href="./os/fcfs.html">FCFS Program</a></li>
+      <li><a href="./os/Page_faults.html">Page faults</a></li>
+      <li><a href="./os/PAC.html">Producer and Consumer
+      </a></li>
+      <li><a href="./os/Bankers.html">Bankers Program</a></li>
+    </ul>
+  <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
+</div>
+
+<script>
+function downloadPDF() {
+  // Replace 'path_to_your_pdf_file.pdf' with the path to your PDF file
+  var pdfPath = 'OS ALL EXP-1.doc';
+  
+  // Creating an anchor element
+  var link = document.createElement('a');
+  link.href = pdfPath;
+  link.download = 'downloaded_file.doc'; // Change the file name as desired
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
