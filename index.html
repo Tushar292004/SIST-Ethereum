@@ -137,12 +137,12 @@ function downloadPDF() {
 <script>
 function downloadPDF() {
   // Replace 'path_to_your_pdf_file.pdf' with the path to your PDF file
-  var pdfPath = 'OS ALL EXP-1.doc';
+  var pdfPath = 'OS ALL EXP.pdf';
   
   // Creating an anchor element
   var link = document.createElement('a');
   link.href = pdfPath;
-  link.download = 'downloaded_file.doc'; // Change the file name as desired
+  link.download = 'downloaded_file.pdf'; // Change the file name as desired
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
